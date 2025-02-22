@@ -39,10 +39,10 @@ export default function Navbar() {
     };
 
     // Add smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e: MouseEvent) => {
-        const target = (e.currentTarget as HTMLAnchorElement);
+    useEffect(() => {
+      const handleClick = (e: Event) => {
         e.preventDefault();
+        const target = e.currentTarget as HTMLAnchorElement;
         const href = target.getAttribute('href');
         if (href) {
           const element = document.querySelector(href);
@@ -51,8 +51,19 @@ export default function Navbar() {
             element.scrollIntoView({ behavior: 'smooth' });
           }
         }
+      };
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', handleClick);
       });
-    });
+
+      // Cleanup
+      return () => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.removeEventListener('click', handleClick);
+        });
+      };
+    }, []);
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
