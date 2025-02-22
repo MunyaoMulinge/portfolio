@@ -4,18 +4,26 @@ import { useState, useEffect } from 'react';
 import { FiSun, FiMoon, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 
 const socialLinks = {
-  github: 'https://github.com/victormulinge',
+  github: 'https://github.com/MunyaoMulinge',
   linkedin: 'https://linkedin.com/in/victormulinge',
-  email: 'victormulinge@example.com',
+  email: 'victormulinge@gmail.com',
 };
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
+    setMounted(true);
+    // Get initial dark mode preference from localStorage or system preference
+    const isDark = localStorage.getItem('darkMode') === 'true' || 
+      (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
     setDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    }
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -26,9 +34,16 @@ export default function Navbar() {
   }, []);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
     document.documentElement.classList.toggle('dark');
   };
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <nav className={`fixed w-full bg-background/80 backdrop-blur-sm border-b z-50 transition-all duration-300 ${
