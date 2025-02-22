@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FiSun, FiMoon, FiGithub, FiLinkedin, FiMail, FiMenu, FiX } from 'react-icons/fi';
 import { FaXTwitter } from 'react-icons/fa6';
 
@@ -24,6 +24,18 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (href) {
+      const element = document.querySelector(href);
+      if (element) {
+        setMobileMenuOpen(false);
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     const isDark = localStorage.getItem('darkMode') === 'true' || 
@@ -37,33 +49,6 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
-    // Add smooth scrolling
-    useEffect(() => {
-      const handleClick = (e: Event) => {
-        e.preventDefault();
-        const target = e.currentTarget as HTMLAnchorElement;
-        const href = target.getAttribute('href');
-        if (href) {
-          const element = document.querySelector(href);
-          if (element) {
-            setMobileMenuOpen(false);
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      };
-
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', handleClick);
-      });
-
-      // Cleanup
-      return () => {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.removeEventListener('click', handleClick);
-        });
-      };
-    }, []);
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -93,7 +78,12 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             {menuItems.map((item) => (
-              <a key={item.href} href={item.href} className="nav-link">
+              <a 
+                key={item.href} 
+                href={item.href} 
+                className="nav-link"
+                onClick={scrollToSection}
+              >
                 {item.label}
               </a>
             ))}
@@ -172,7 +162,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className="nav-link block px-4 py-2"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={scrollToSection}
                 >
                   {item.label}
                 </a>
