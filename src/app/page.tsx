@@ -252,7 +252,7 @@ export default function Home() {
           <h2 className="section-title">Get in Touch</h2>
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-lg text-muted-foreground mb-8">
-              I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi, 
+              I am currently open to new opportunities. Whether you have a question or just want to say hi, 
               feel free to reach out!
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
