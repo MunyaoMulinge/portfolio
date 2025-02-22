@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiGithub, FiLinkedin, FiMail, FiPhone } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 
 const skills = [
   { name: 'Spring Boot', level: 'Advanced' },
@@ -252,7 +252,7 @@ export default function Home() {
           <h2 className="section-title">Get in Touch</h2>
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-lg text-muted-foreground mb-8">
-              I'm currently open to new opportunities. Whether you have a question or just want to say hi, 
+              I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi, 
               feel free to reach out!
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
