@@ -64,7 +64,6 @@ const projects = [
 
 const contact = {
   email: 'your.email@example.com',
-  phone: '+254 700 000000',
   github: 'https://github.com/your-username',
   linkedin: 'https://linkedin.com/in/your-profile',
 };
