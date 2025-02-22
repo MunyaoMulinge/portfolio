@@ -18,30 +18,37 @@ const skills = [
 const experience = [
   {
     title: 'Full Stack Developer',
-    company: 'Company Name',
-    period: '2023 - Present',
+    company: 'Tangazoletu Limited',
+    period: '2024 - Present',
     description: 'Developed and maintained web applications using Spring Boot, Angular, and MySQL. Implemented new features and improved application performance.',
-    tech: ['Spring Boot', 'Angular', 'MySQL', 'TypeScript'],
+    tech: ['Spring Boot', 'Angular', 'MySQL', 'PHP', 'Flutter', 'JavaScript'],
   },
   {
-    title: 'Software Developer',
-    company: 'Company Name',
+    title: 'ICT Assistant',
+    company: 'ICT Authority of Kenya',
     period: '2022 - 2023',
     description: 'Built responsive web applications using React and PHP. Collaborated with the design team to implement user-friendly interfaces.',
-    tech: ['React', 'PHP', 'MySQL', 'JavaScript'],
+    tech: ['Django', 'PHP', 'MySQL', 'JavaScript'],
   },
 ];
 
 const education = [
   {
-    degree: 'Bachelor of Science in Computer Science',
-    school: 'Your University',
-    period: '2018 - 2022',
+    degree: 'Bachelor of Science in Information Technology',
+    school: 'Multimedia University of Kenya',
+    period: '2017 - 2021',
     description: 'Focused on software engineering, database management, and web development.',
   },
 ];
 
 const projects = [
+  {
+    title: 'Full Stack Customer Management System',
+    description: 'A modern, containerized full-stack application for customer management built with Spring Boot, Angular, and PostgreSQL. Features include customer CRUD operations, responsive UI with PrimeFlex, and Docker containerization for easy deployment.',
+    tech: ['Spring Boot 3', 'Angular 15', 'PostgreSQL', 'Docker', 'AWS', 'PrimeFlex'],
+    link: 'https://github.com/MunyaoMulinge/FullStack',
+    image: '/projects/fullstack-customer.png'
+  },
   {
     title: 'E-commerce Platform',
     description: 'A full-stack e-commerce platform with user authentication, product management, and payment integration.',

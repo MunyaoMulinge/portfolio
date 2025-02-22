@@ -131,6 +131,7 @@ export default function Navbar() {
               
               <a
                 href={`mailto:${socialLinks.email}`}
+                target="_blank"
                 className="nav-link"
                 aria-label="Email"
               >
