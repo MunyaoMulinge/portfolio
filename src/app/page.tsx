@@ -5,14 +5,14 @@ import { useInView } from 'react-intersection-observer';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 
 const skills = [
-  { name: 'Spring Boot', level: 'Advanced' },
-  { name: 'Angular', level: 'Advanced' },
-  { name: 'React', level: 'Advanced' },
-  { name: 'PHP', level: 'Advanced' },
-  { name: 'Flutter', level: 'Intermediate' },
-  { name: 'MySQL', level: 'Advanced' },
-  { name: 'TypeScript', level: 'Advanced' },
-  { name: 'Tailwind CSS', level: 'Intermediate' },
+  { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
+  { name: 'Angular', level: 'Advanced', icon: '🅰️' },
+  { name: 'React', level: 'Advanced', icon: '⚛️' },
+  { name: 'PHP', level: 'Advanced', icon: '🐘' },
+  { name: 'Flutter', level: 'Intermediate', icon: '🐦' },
+  { name: 'MySQL', level: 'Advanced', icon: '🐬' },
+  { name: 'TypeScript', level: 'Advanced', icon: '🟦' },
+  { name: 'Tailwind CSS', level: 'Intermediate', icon: '🎨' },
 ];
 
 const experience = [
@@ -93,14 +93,14 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6">
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Full Stack Developer
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             With 2 years of experience in building modern web applications using
             Spring Boot, Angular, React, PHP, Flutter, and MySQL databases.
           </p>
-          <button className="btn-primary">
+          <button className="btn-primary hover:scale-105 transition-transform">
             View My Work
           </button>
         </motion.div>
@@ -121,10 +121,13 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={skillsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card"
+                className="card hover:shadow-lg transition-shadow"
               >
+                <div className="text-3xl mb-2">{skill.icon}</div>
                 <h3 className="font-semibold mb-2">{skill.name}</h3>
-                <p className="text-sm text-muted-foreground">{skill.level}</p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                  <div className="bg-primary h-2.5 rounded-full" style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}></div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -218,30 +221,41 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={projectsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card"
+                className="card group hover:shadow-lg transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-muted dark:bg-muted rounded-full text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                {project.image && (
+                  <div className="h-48 overflow-hidden rounded-t-lg">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-muted dark:bg-muted rounded-full text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={project.link}
+                    className="text-primary hover:underline inline-flex items-center gap-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Project <FiGithub className="w-4 h-4" />
+                  </a>
                 </div>
-                <a
-                  href={project.link}
-                  className="text-primary hover:underline inline-flex items-center gap-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Project <FiGithub className="w-4 h-4" />
-                </a>
               </motion.div>
             ))}
           </div>
