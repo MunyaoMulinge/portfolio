@@ -40,14 +40,15 @@ export default function Navbar() {
 
     // Add smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', (e: MouseEvent) => {
+        const target = (e.currentTarget as HTMLAnchorElement);
         e.preventDefault();
-        const href = this.getAttribute('href');
+        const href = target.getAttribute('href');
         if (href) {
-          const target = document.querySelector(href);
-          if (target) {
+          const element = document.querySelector(href);
+          if (element) {
             setMobileMenuOpen(false);
-            target.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: 'smooth' });
           }
         }
       });
