@@ -63,9 +63,9 @@ const projects = [
 ];
 
 const contact = {
-  email: 'your.email@example.com',
-  github: 'https://github.com/your-username',
-  linkedin: 'https://linkedin.com/in/your-profile',
+  email: 'munyaomulinge@protonmail.com',
+  github: 'https://github.com/MunyaoMulinge',
+  linkedin: 'https://linkedin.com/in/victormulinge',
 };
 
 export default function Home() {
@@ -77,9 +77,9 @@ export default function Home() {
   const [contactRef, contactInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="section-container" ref={heroRef}>
+      <section id="hero" className="section-container" ref={heroRef}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="section-container bg-muted dark:bg-muted" ref={skillsRef}>
+      <section id="skills" className="section-container bg-muted dark:bg-muted" ref={skillsRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={skillsInView ? { opacity: 1 } : {}}
@@ -125,7 +125,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section className="section-container" ref={experienceRef}>
+      <section id="experience" className="section-container" ref={experienceRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={experienceInView ? { opacity: 1 } : {}}
@@ -166,7 +166,7 @@ export default function Home() {
       </section>
 
       {/* Education Section */}
-      <section className="section-container bg-muted dark:bg-muted" ref={educationRef}>
+      <section id="education" className="section-container" ref={educationRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={educationInView ? { opacity: 1 } : {}}
@@ -197,7 +197,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section className="section-container" ref={projectsRef}>
+      <section id="projects" className="section-container bg-muted dark:bg-muted" ref={projectsRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={projectsInView ? { opacity: 1 } : {}}
@@ -242,7 +242,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="section-container bg-muted dark:bg-muted" ref={contactRef}>
+      <section id="contact" className="section-container" ref={contactRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={contactInView ? { opacity: 1 } : {}}
@@ -275,6 +275,6 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-    </div>
+    </main>
   );
 }

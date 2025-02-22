@@ -63,4 +63,9 @@
     content: '';
     @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full mt-4;
   }
+
+  /* Add scroll margin for sections */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
 }
