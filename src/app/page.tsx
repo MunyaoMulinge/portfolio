@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiGithub, FiLinkedin, FiMail, FiCalendar } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiCalendar, FiExternalLink } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import ScrollProgress from '@/components/ScrollProgress';
 import BackToTop from '@/components/BackToTop';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const skills = [
   { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
@@ -48,27 +50,29 @@ const projects = [
   {
     title: 'Full Stack Customer Management System',
     description: 'A modern, containerized full-stack application for customer management built with Spring Boot, Angular, and PostgreSQL. Features include customer CRUD operations, responsive UI with PrimeFlex, and Docker containerization for easy deployment.',
-    tech: ['Spring Boot 3', 'Angular 15', 'PostgreSQL', 'Docker', 'AWS', 'PrimeFlex'],
+    tech: ['Spring Boot', 'Angular', 'PostgreSQL'],
     link: 'https://github.com/MunyaoMulinge/FullStack',
-    image: '/projects/fullstack-customer.png'
+    image: '/images/projects/fullstack-customer.jpg'
   },
   {
     title: 'E-commerce Platform',
     description: 'A full-stack e-commerce platform with user authentication, product management, and payment integration.',
     tech: ['React', 'Spring Boot', 'MySQL'],
     link: 'https://github.com/your-username/project1',
+    image: '/images/projects/default.jpg'
   },
   {
     title: 'Task Management App',
     description: 'A mobile application for task management and team collaboration built with Flutter.',
     tech: ['Flutter', 'Firebase'],
     link: 'https://github.com/your-username/project2',
+    image: '/images/projects/default.jpg'
   },
   {
     title: 'Portfolio Website',
     description: 'A modern portfolio website built with Next.js and Tailwind CSS, featuring dark mode and animations.',
     tech: ['Next.js', 'TypeScript', 'Tailwind'],
-    link: 'https://github.com/your-username/project3',
+    link: 'https://github.com/MunyaoMulinge/portfolio',
   },
 ];
 
@@ -129,6 +133,8 @@ export default function Home() {
   const { ref: blogRef, inView: blogInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: testimonialsRef, inView: testimonialsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: contactRef, inView: contactInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
@@ -287,6 +293,22 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="custom-card group hover:shadow-lg transition-shadow relative overflow-hidden"
               >
+                <div 
+                  className="cursor-pointer"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  {project.image && (
+                    <div className="h-48 relative overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                </div>
                 <div className="p-6">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors relative z-10">
@@ -295,9 +317,11 @@ export default function Home() {
                   <p className="text-muted-foreground mb-4 relative z-10">{project.description}</p>
                   <a
                     href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline inline-flex items-center gap-2 relative z-10"
                   >
-                    View Project →
+                    View Project <FiExternalLink className="w-4 h-4" />
                   </a>
                 </div>
               </motion.div>
@@ -400,6 +424,9 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a
                 href={`mailto:${contact.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Email me (opens in new tab)"
                 className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
               >
                 <FiMail className="w-5 h-5" />
@@ -418,6 +445,26 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-full">
+            <Image
+              src="/images/projects/fullstack-customer.jpg"
+              alt="Full Stack Customer Management System"
+              width={1200}
+              height={800}
+              className="object-contain"
+            />
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-black/75"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
