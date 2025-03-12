@@ -2,7 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiCalendar } from 'react-icons/fi';
+import { TypeAnimation } from 'react-type-animation';
+import ScrollProgress from '@/components/ScrollProgress';
+import BackToTop from '@/components/BackToTop';
 
 const skills = [
   { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
@@ -75,16 +78,63 @@ const contact = {
   linkedin: 'https://linkedin.com/in/victormulinge',
 };
 
+const testimonials = [
+  {
+    name: 'John Doe',
+    role: 'Tech Lead at Company',
+    content: 'Victor is an exceptional developer who consistently delivers high-quality code. His attention to detail and problem-solving skills are remarkable.',
+    image: '/testimonials/john.jpg'
+  },
+  {
+    name: 'Jane Smith',
+    role: 'Project Manager',
+    content: 'Working with Victor was a pleasure. He has excellent communication skills and always meets deadlines while maintaining code quality.',
+    image: '/testimonials/jane.jpg'
+  },
+  {
+    name: 'Mike Johnson',
+    role: 'Senior Developer',
+    content: 'Victor\'s ability to quickly grasp new technologies and implement them effectively is impressive. He\'s a valuable asset to any development team.',
+    image: '/testimonials/mike.jpg'
+  }
+];
+
+const blogPosts = [
+  {
+    title: 'Building Scalable Applications with Spring Boot',
+    excerpt: 'Learn how to create robust and scalable applications using Spring Boot and best practices.',
+    date: '2024-02-15',
+    link: '/blog/spring-boot-scalable-apps'
+  },
+  {
+    title: 'Modern Angular Development Techniques',
+    excerpt: 'Explore advanced Angular patterns and techniques for building better web applications.',
+    date: '2024-02-01',
+    link: '/blog/angular-development'
+  },
+  {
+    title: 'Docker and Kubernetes: A Practical Guide',
+    excerpt: 'A comprehensive guide to containerization and orchestration with Docker and Kubernetes.',
+    date: '2024-01-15',
+    link: '/blog/docker-kubernetes-guide'
+  }
+];
+
 export default function Home() {
-  const [heroRef, heroInView] = useInView({ triggerOnce: true });
-  const [skillsRef, skillsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [experienceRef, experienceInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [educationRef, educationInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [projectsRef, projectsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [contactRef, contactInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: heroRef, inView: heroInView } = useInView({ triggerOnce: true });
+  const { ref: skillsRef, inView: skillsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: experienceRef, inView: experienceInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: educationRef, inView: educationInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: projectsRef, inView: projectsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: blogRef, inView: blogInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: testimonialsRef, inView: testimonialsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: contactRef, inView: contactInView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
+      <ScrollProgress />
+      <BackToTop />
+      
       {/* Hero Section */}
       <section id="hero" className="section-container" ref={heroRef}>
         <motion.div
@@ -94,7 +144,21 @@ export default function Home() {
           className="text-center"
         >
           <h1 className="text-4xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Full Stack Developer
+            <TypeAnimation
+              sequence={[
+                'Full Stack Developer',
+                2000,
+                'Spring Boot Expert',
+                2000,
+                'Angular Developer',
+                2000,
+                'React Enthusiast',
+                2000,
+              ]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+            />
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             With 2 years of experience in building modern web applications using
@@ -221,39 +285,97 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={projectsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group hover:shadow-lg transition-shadow"
+                className="custom-card group hover:shadow-lg transition-shadow relative overflow-hidden"
               >
-                {project.image && (
-                  <div className="h-48 overflow-hidden rounded-t-lg">
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                )}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                  <p className="text-muted-foreground mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-muted dark:bg-muted rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors relative z-10">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 relative z-10">{project.description}</p>
                   <a
                     href={project.link}
-                    className="text-primary hover:underline inline-flex items-center gap-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    className="text-primary hover:underline inline-flex items-center gap-2 relative z-10"
                   >
-                    View Project <FiGithub className="w-4 h-4" />
+                    View Project →
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="section-container bg-muted dark:bg-muted" ref={testimonialsRef}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={testimonialsInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="section-title">Testimonials</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="card hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h3 className="font-semibold">{testimonial.name}</h3>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground italic">{testimonial.content}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Blog Section */}
+      <section id="blog" className="section-container" ref={blogRef}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={blogInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="section-title">Latest Blog Posts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            {blogPosts.map((post, index) => (
+              <motion.div
+                key={post.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={blogInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="card group hover:shadow-lg transition-shadow"
+              >
+                <div className="p-6">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                    <FiCalendar className="w-4 h-4" />
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4">{post.excerpt}</p>
+                  <a
+                    href={post.link}
+                    className="text-primary hover:underline inline-flex items-center gap-2"
+                  >
+                    Read More →
                   </a>
                 </div>
               </motion.div>
@@ -263,22 +385,22 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section-container" ref={contactRef}>
+      <section id="contact" className="section-container pattern-dots" ref={contactRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={contactInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto bg-background/80 backdrop-blur-sm p-8 rounded-xl shadow-lg"
         >
-          <h2 className="section-title">Get in Touch</h2>
-          <div className="max-w-2xl mx-auto text-center">
+          <h2 className="section-title">Let's Connect</h2>
+          <div className="text-center">
             <p className="text-lg text-muted-foreground mb-8">
-              I am currently open to new opportunities. Whether you have a question or just want to say hi, 
-              feel free to reach out!
+              I'm currently open to new opportunities and collaborations. Whether you have a project in mind or just want to chat about tech, I'd love to hear from you!
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a
                 href={`mailto:${contact.email}`}
-                className="btn-primary inline-flex items-center gap-2"
+                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
               >
                 <FiMail className="w-5 h-5" />
                 Email Me
@@ -287,7 +409,7 @@ export default function Home() {
                 href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2"
+                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
               >
                 <FiLinkedin className="w-5 h-5" />
                 Connect on LinkedIn
