@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Victor Mulinge - Full Stack Developer",
-  description: "Full Stack Developer with experience in Spring Boot, Angular, React, PHP, Flutter and MySQL databases",
+  description: "Portfolio of Victor Mulinge, a Full Stack Developer with expertise in Spring Boot, Angular, React, and more.",
 };
 
 export default function RootLayout({

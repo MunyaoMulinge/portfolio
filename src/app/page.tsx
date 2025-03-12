@@ -170,6 +170,19 @@ export default function Home() {
             With 2 years of experience in building modern web applications using
             Spring Boot, Angular, React, PHP, Flutter, and MySQL databases.
           </p>
+          <a
+            href="/resume.pdf"
+            download
+            className="btn-primary hover:scale-105 transition-transform mt-4 inline-block"
+            onClick={(e) => {
+              if (!fetch('/resume.pdf').then((res) => res.ok)) {
+                e.preventDefault();
+                alert('Resume not found. Please contact me directly.');
+              }
+            }}
+          >
+            Download Resume
+          </a>
           <button className="btn-primary hover:scale-105 transition-transform">
             View My Work
           </button>
@@ -198,6 +211,7 @@ export default function Home() {
                 <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                   <div className="bg-primary h-2.5 rounded-full" style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}></div>
                 </div>
+                <p className="text-sm text-muted-foreground mt-1">{skill.level}</p>
               </motion.div>
             ))}
           </div>
@@ -305,6 +319,8 @@ export default function Home() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL="/images/placeholder.jpg"
                       />
                     </div>
                   )}
@@ -444,6 +460,14 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+      </section>
+
+      <section className="bg-primary text-white dark:text-background py-12">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Available for New Opportunities</h2>
+          <p className="mb-8">I'm currently open to freelance projects, full-time roles, and collaborations. Let's build something amazing together!</p>
+          <a href="#contact" className="btn-secondary">Hire Me</a>
+        </div>
       </section>
 
       {isModalOpen && (
