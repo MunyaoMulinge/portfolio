@@ -24,6 +24,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -54,6 +55,10 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
@@ -92,11 +97,11 @@ export default function Navbar() {
           
           <div className="flex items-center gap-4">
             <button
-              onClick={toggleDarkMode}
+              onClick={() => setIsDarkMode(!isDarkMode)}
               className="nav-link"
               aria-label="Toggle dark mode"
             >
-              {darkMode ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
+              {isDarkMode ? '☀️' : '🌙'}
             </button>
             
             <div className="hidden md:flex items-center gap-4">
@@ -104,7 +109,7 @@ export default function Navbar() {
                 href={socialLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="nav-link"
+                className="nav-link hover:scale-110 transition-transform"
                 aria-label="GitHub"
               >
                 <FiGithub className="w-5 h-5" />
@@ -114,7 +119,7 @@ export default function Navbar() {
                 href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="nav-link"
+                className="nav-link hover:scale-110 transition-transform"
                 aria-label="LinkedIn"
               >
                 <FiLinkedin className="w-5 h-5" />
@@ -124,7 +129,7 @@ export default function Navbar() {
                 href={socialLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="nav-link"
+                className="nav-link hover:scale-110 transition-transform"
                 aria-label="X (Twitter)"
               >
                 <FaXTwitter className="w-5 h-5" />
@@ -133,7 +138,7 @@ export default function Navbar() {
               <a
                 href={`mailto:${socialLinks.email}`}
                 target="_blank"
-                className="nav-link"
+                className="nav-link hover:scale-110 transition-transform"
                 aria-label="Email"
               >
                 <FiMail className="w-5 h-5" />

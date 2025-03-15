@@ -2,12 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiGithub, FiLinkedin, FiMail, FiCalendar, FiExternalLink } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiCalendar, FiExternalLink, FiPhone } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import ScrollProgress from '@/components/ScrollProgress';
 import BackToTop from '@/components/BackToTop';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const skills = [
   { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
@@ -73,11 +74,13 @@ const projects = [
     description: 'A modern portfolio website built with Next.js and Tailwind CSS, featuring dark mode and animations.',
     tech: ['Next.js', 'TypeScript', 'Tailwind'],
     link: 'https://github.com/MunyaoMulinge/portfolio',
+    image: '/images/projects/default.jpg'
   },
 ];
 
 const contact = {
   email: 'munyaomulinge@protonmail.com',
+  phone: '+254722253660',
   github: 'https://github.com/MunyaoMulinge',
   linkedin: 'https://linkedin.com/in/victormulinge',
 };
@@ -135,6 +138,39 @@ export default function Home() {
   const { ref: contactRef, inView: contactInView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [error, setError] = useState('');
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSending(true);
+    setError('');
+
+    if (!formRef.current) return;
+
+    emailjs
+      .sendForm(
+        'service_kqfkrzu', // Replace with your EmailJS Service ID
+        'template_7e4ec5r', // Replace with your EmailJS Template ID
+        formRef.current,
+        'E3fErgvoOnuFIsVtg' // Replace with your EmailJS Public Key
+      )
+      .then(
+        (result) => {
+          console.log('Email sent successfully:', result.text);
+          setIsSent(true);
+          setIsSending(false);
+          formRef.current?.reset();
+        },
+        (error) => {
+          console.error('Failed to send email:', error.text);
+          setError('Failed to send email. Please try again.');
+          setIsSending(false);
+        }
+      );
+  };
 
   return (
     <main className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
@@ -183,9 +219,9 @@ export default function Home() {
           >
             Download Resume
           </a>
-          <button className="btn-primary hover:scale-105 transition-transform">
+          <a href="#projects" className="btn-primary hover:scale-105 transition-transform">
             View My Work
-          </button>
+          </a>
         </motion.div>
       </section>
 
@@ -204,9 +240,9 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={skillsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card hover:shadow-lg transition-shadow"
+                className="card hover:shadow-lg hover:scale-105 transition-transform"
               >
-                <div className="text-3xl mb-2">{skill.icon}</div>
+                <div className="text-3xl mb-2 hover:text-primary transition-colors">{skill.icon}</div>
                 <h3 className="font-semibold mb-2">{skill.name}</h3>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                   <div className="bg-primary h-2.5 rounded-full" style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}></div>
@@ -307,22 +343,17 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="custom-card group hover:shadow-lg transition-shadow relative overflow-hidden"
               >
-                <div 
-                  className="cursor-pointer"
-                  onClick={() => setIsModalOpen(true)}
-                >
+                <div className="h-48 relative overflow-hidden">
                   {project.image && (
-                    <div className="h-48 relative overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        placeholder="blur"
-                        blurDataURL="/images/placeholder.jpg"
-                      />
-                    </div>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      placeholder="blur"
+                      blurDataURL="/images/placeholder.jpg"
+                    />
                   )}
                 </div>
                 <div className="p-6">
@@ -361,7 +392,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card hover:shadow-lg transition-shadow"
+                className="card hover:shadow-lg hover:scale-105 transition-transform"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <img
@@ -396,7 +427,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={blogInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group hover:shadow-lg transition-shadow"
+                className="card group hover:shadow-lg hover:scale-105 transition-transform"
               >
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
@@ -449,6 +480,13 @@ export default function Home() {
                 Email Me
               </a>
               <a
+                href={`tel:${contact.phone}`}
+                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+              >
+                <FiPhone className="w-5 h-5" />
+                Call Me
+              </a>
+              <a
                 href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -459,6 +497,45 @@ export default function Home() {
               </a>
             </div>
           </div>
+          <form ref={formRef} onSubmit={sendEmail} className="mt-8">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Your Phone Number"
+              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
+              rows={4}
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={isSending}
+            >
+              {isSending ? 'Sending...' : 'Send Message'}
+            </button>
+            {isSent && <p className="mt-4 text-green-500">Message sent successfully!</p>}
+            {error && <p className="mt-4 text-red-500">{error}</p>}
+          </form>
         </motion.div>
       </section>
 
