@@ -142,11 +142,66 @@ export default function Home() {
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [error, setError] = useState('');
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {};
+    
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters';
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.phone.trim()) {
+      errors.phone = 'Phone number is required';
+    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-\(\)]/g, ''))) {
+      errors.phone = 'Please enter a valid phone number';
+    }
+    
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Message must be at least 10 characters';
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
 
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSending(true);
     setError('');
+    setIsSent(false);
 
     if (!formRef.current) return;
 
@@ -162,7 +217,11 @@ export default function Home() {
           console.log('Email sent successfully:', result.text);
           setIsSent(true);
           setIsSending(false);
+          setFormData({ name: '', email: '', phone: '', message: '' });
           formRef.current?.reset();
+          
+          // Auto-hide success message after 5 seconds
+          setTimeout(() => setIsSent(false), 5000);
         },
         (error) => {
           console.error('Failed to send email:', error.text);
@@ -206,19 +265,53 @@ export default function Home() {
             With 2 years of experience in building modern web applications using
             Spring Boot, Angular, React, PHP, Flutter, and MySQL databases.
           </p>
-          <a
-            href="/resume.pdf"
-            download
-            className="btn-primary hover:scale-105 transition-transform mt-4 inline-block"
-            onClick={(e) => {
-              if (!fetch('/resume.pdf').then((res) => res.ok)) {
-                e.preventDefault();
-                alert('Resume not found. Please contact me directly.');
+          <motion.button
+            onClick={async (e) => {
+              e.preventDefault();
+              setIsDownloading(true);
+              
+              try {
+                const response = await fetch('/resume.pdf');
+                if (response.ok) {
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'Victor_Mulinge_Resume.pdf';
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+                } else {
+                  throw new Error('Resume not found');
+                }
+              } catch (error) {
+                alert('Resume not available at the moment. Please contact me directly at munyaomulinge@protonmail.com');
+              } finally {
+                setIsDownloading(false);
               }
             }}
+            disabled={isDownloading}
+            whileHover={{ scale: isDownloading ? 1 : 1.05 }}
+            whileTap={{ scale: isDownloading ? 1 : 0.95 }}
+            className={`btn-primary transition-transform mt-4 inline-flex items-center gap-2 ${
+              isDownloading ? 'opacity-70 cursor-not-allowed' : ''
+            }`}
           >
-            Download Resume
-          </a>
+            {isDownloading ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download Resume
+              </>
+            )}
+          </motion.button>
           <a href="#projects" className="btn-primary hover:scale-105 transition-transform">
             View My Work
           </a>
@@ -395,11 +488,15 @@ export default function Home() {
                 className="card hover:shadow-lg hover:scale-105 transition-transform"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                    <Image
+                      src={testimonial.image}
+                      alt={`${testimonial.name} - ${testimonial.role}`}
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  </div>
                   <div>
                     <h3 className="font-semibold">{testimonial.name}</h3>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>
@@ -497,44 +594,156 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <form ref={formRef} onSubmit={sendEmail} className="mt-8">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Your Phone Number"
-              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
-              required
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              className="w-full p-2 mb-4 rounded bg-background text-foreground dark:bg-background dark:text-foreground"
-              rows={4}
-              required
-            ></textarea>
-            <button
+          <form ref={formRef} onSubmit={sendEmail} className="mt-8 space-y-4">
+            <div>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Your Name"
+                className={`w-full p-3 rounded-lg border transition-colors ${
+                  formErrors.name 
+                    ? 'border-red-500 focus:border-red-500' 
+                    : 'border-border focus:border-primary'
+                } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
+                disabled={isSending}
+              />
+              {formErrors.name && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {formErrors.name}
+                </motion.p>
+              )}
+            </div>
+
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Your Email"
+                className={`w-full p-3 rounded-lg border transition-colors ${
+                  formErrors.email 
+                    ? 'border-red-500 focus:border-red-500' 
+                    : 'border-border focus:border-primary'
+                } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
+                disabled={isSending}
+              />
+              {formErrors.email && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {formErrors.email}
+                </motion.p>
+              )}
+            </div>
+
+            <div>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Your Phone Number"
+                className={`w-full p-3 rounded-lg border transition-colors ${
+                  formErrors.phone 
+                    ? 'border-red-500 focus:border-red-500' 
+                    : 'border-border focus:border-primary'
+                } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
+                disabled={isSending}
+              />
+              {formErrors.phone && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {formErrors.phone}
+                </motion.p>
+              )}
+            </div>
+
+            <div>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder="Your Message"
+                rows={4}
+                className={`w-full p-3 rounded-lg border transition-colors resize-none ${
+                  formErrors.message 
+                    ? 'border-red-500 focus:border-red-500' 
+                    : 'border-border focus:border-primary'
+                } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
+                disabled={isSending}
+              />
+              {formErrors.message && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {formErrors.message}
+                </motion.p>
+              )}
+            </div>
+
+            <motion.button
               type="submit"
-              className="btn-primary"
               disabled={isSending}
+              whileHover={{ scale: isSending ? 1 : 1.02 }}
+              whileTap={{ scale: isSending ? 1 : 0.98 }}
+              className={`w-full btn-primary flex items-center justify-center gap-2 ${
+                isSending ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
-              {isSending ? 'Sending...' : 'Send Message'}
-            </button>
-            {isSent && <p className="mt-4 text-green-500">Message sent successfully!</p>}
-            {error && <p className="mt-4 text-red-500">{error}</p>}
+              {isSending ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <FiMail className="w-5 h-5" />
+                  Send Message
+                </>
+              )}
+            </motion.button>
+
+            {/* Success Message */}
+            {isSent && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg"
+              >
+                <p className="text-green-700 dark:text-green-300 flex items-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  Message sent successfully! I'll get back to you soon.
+                </p>
+              </motion.div>
+            )}
+
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+              >
+                <p className="text-red-700 dark:text-red-300 flex items-center gap-2">
+                  <span className="text-red-500">✗</span>
+                  {error}
+                </p>
+              </motion.div>
+            )}
           </form>
         </motion.div>
       </section>
