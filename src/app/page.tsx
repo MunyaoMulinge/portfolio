@@ -232,19 +232,19 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
+    <main className="min-h-screen bg-background">
       <ScrollProgress />
       <BackToTop />
       
       {/* Hero Section */}
-      <section id="hero" className="section-container" ref={heroRef}>
+      <section id="hero" className="section-container min-h-[90vh] flex items-center" ref={heroRef}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center"
+          className="text-center w-full"
         >
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 text-foreground">
             <TypeAnimation
               sequence={[
                 'Full Stack Developer',
@@ -261,86 +261,92 @@ export default function Home() {
               repeat={Infinity}
             />
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             With 2 years of experience in building modern web applications using
             Spring Boot, Angular, React, PHP, Flutter, and MySQL databases.
           </p>
-          <motion.button
-            onClick={async (e) => {
-              e.preventDefault();
-              setIsDownloading(true);
-              
-              try {
-                const response = await fetch('/resume.pdf');
-                if (response.ok) {
-                  const blob = await response.blob();
-                  const url = window.URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'Victor_Mulinge_Resume.pdf';
-                  document.body.appendChild(a);
-                  a.click();
-                  window.URL.revokeObjectURL(url);
-                  document.body.removeChild(a);
-                } else {
-                  throw new Error('Resume not found');
+          <div className="flex flex-wrap justify-center gap-4">
+            <motion.button
+              onClick={async (e) => {
+                e.preventDefault();
+                setIsDownloading(true);
+                
+                try {
+                  const response = await fetch('/resume.pdf');
+                  if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'Victor_Mulinge_Resume.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                  } else {
+                    throw new Error('Resume not found');
+                  }
+                } catch (error) {
+                  alert('Resume not available at the moment. Please contact me directly at munyaomulinge@protonmail.com');
+                } finally {
+                  setIsDownloading(false);
                 }
-              } catch (error) {
-                alert('Resume not available at the moment. Please contact me directly at munyaomulinge@protonmail.com');
-              } finally {
-                setIsDownloading(false);
-              }
-            }}
-            disabled={isDownloading}
-            whileHover={{ scale: isDownloading ? 1 : 1.05 }}
-            whileTap={{ scale: isDownloading ? 1 : 0.95 }}
-            className={`btn-primary transition-transform mt-4 inline-flex items-center gap-2 ${
-              isDownloading ? 'opacity-70 cursor-not-allowed' : ''
-            }`}
-          >
-            {isDownloading ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Downloading...
-              </>
-            ) : (
-              <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Download Resume
-              </>
-            )}
-          </motion.button>
-          <a href="#projects" className="btn-primary hover:scale-105 transition-transform">
-            View My Work
-          </a>
+              }}
+              disabled={isDownloading}
+              whileHover={{ scale: isDownloading ? 1 : 1.05 }}
+              whileTap={{ scale: isDownloading ? 1 : 0.95 }}
+              className={`btn-primary inline-flex items-center gap-2 ${
+                isDownloading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
+            >
+              {isDownloading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                  Downloading...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download Resume
+                </>
+              )}
+            </motion.button>
+            <a href="#projects" className="btn-secondary hover:scale-105 transition-transform inline-flex items-center gap-2">
+              View My Work
+              <FiExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </motion.div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="section-container bg-muted dark:bg-muted" ref={skillsRef}>
+      <section id="skills" className="section-container bg-muted/50 pattern-dots" ref={skillsRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={skillsInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">My Skills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={skillsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card hover:shadow-lg hover:scale-105 transition-transform"
+                className="card hover:scale-105 transition-transform text-center"
               >
-                <div className="text-3xl mb-2 hover:text-primary transition-colors">{skill.icon}</div>
-                <h3 className="font-semibold mb-2">{skill.name}</h3>
-                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                  <div className="bg-primary h-2.5 rounded-full" style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}></div>
+                <div className="text-3xl mb-3">{skill.icon}</div>
+                <h3 className="font-semibold mb-3">{skill.name}</h3>
+                <div className="w-full bg-border rounded-full h-2">
+                  <div 
+                    className="bg-primary h-2 rounded-full transition-all duration-500" 
+                    style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}
+                  />
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">{skill.level}</p>
+                <p className="text-sm text-muted-foreground mt-2">{skill.level}</p>
               </motion.div>
             ))}
           </div>
@@ -420,7 +426,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="section-container bg-muted dark:bg-muted" ref={projectsRef}>
+      <section id="projects" className="section-container bg-muted/50" ref={projectsRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={projectsInView ? { opacity: 1 } : {}}
@@ -434,7 +440,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={projectsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="custom-card group hover:shadow-lg transition-shadow relative overflow-hidden"
+                className="custom-card group"
               >
                 <div className="h-48 relative overflow-hidden">
                   {project.image && (
@@ -442,7 +448,7 @@ export default function Home() {
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL="/images/placeholder.jpg"
@@ -450,16 +456,25 @@ export default function Home() {
                   )}
                 </div>
                 <div className="p-6">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors relative z-10">
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4 relative z-10">{project.description}</p>
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 bg-muted text-xs rounded-md font-medium"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline inline-flex items-center gap-2 relative z-10"
+                    className="text-primary hover:underline inline-flex items-center gap-2 text-sm font-medium"
                   >
                     View Project <FiExternalLink className="w-4 h-4" />
                   </a>
@@ -471,24 +486,24 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="section-container bg-muted dark:bg-muted" ref={testimonialsRef}>
+      <section id="testimonials" className="section-container" ref={testimonialsRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={testimonialsInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Testimonials</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card hover:shadow-lg hover:scale-105 transition-transform"
+                className="card hover:scale-[1.02] transition-transform"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-border">
                     <Image
                       src={testimonial.image}
                       alt={`${testimonial.name} - ${testimonial.role}`}
@@ -502,7 +517,7 @@ export default function Home() {
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground italic">{testimonial.content}</p>
+                <p className="text-muted-foreground italic leading-relaxed">&ldquo;{testimonial.content}&rdquo;</p>
               </motion.div>
             ))}
           </div>
@@ -510,42 +525,40 @@ export default function Home() {
       </section>
 
       {/* Blog Section */}
-      <section id="blog" className="section-container" ref={blogRef}>
+      <section id="blog" className="section-container bg-muted/50" ref={blogRef}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={blogInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Latest Blog Posts</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (
               <motion.div
                 key={post.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={blogInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group hover:shadow-lg hover:scale-105 transition-transform"
+                className="card group hover:scale-[1.02] transition-transform"
               >
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                    <FiCalendar className="w-4 h-4" />
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">{post.excerpt}</p>
-                  <a
-                    href={post.link}
-                    className="text-primary hover:underline inline-flex items-center gap-2"
-                  >
-                    Read More →
-                  </a>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                  <FiCalendar className="w-4 h-4" />
+                  {new Date(post.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
                 </div>
+                <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{post.excerpt}</p>
+                <a
+                  href={post.link}
+                  className="text-primary hover:underline inline-flex items-center gap-2 text-sm font-medium"
+                >
+                  Read More →
+                </a>
               </motion.div>
             ))}
           </div>
@@ -558,14 +571,14 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={contactInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto bg-background/80 backdrop-blur-sm p-8 rounded-xl shadow-lg"
+          className="max-w-4xl mx-auto bg-card p-8 rounded-xl border border-border"
         >
-          <h2 className="section-title">Let's Connect</h2>
+          <h2 className="section-title">Let&apos;s Connect</h2>
           <div className="text-center">
-            <p className="text-lg text-muted-foreground mb-8">
-              I'm currently open to new opportunities and collaborations. Whether you have a project in mind or just want to chat about tech, I'd love to hear from you!
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              I&apos;m currently open to new opportunities and collaborations. Whether you have a project in mind or just want to chat about tech, I&apos;d love to hear from you!
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href={`mailto:${contact.email}`}
                 target="_blank"
@@ -578,7 +591,7 @@ export default function Home() {
               </a>
               <a
                 href={`tel:${contact.phone}`}
-                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform"
               >
                 <FiPhone className="w-5 h-5" />
                 Call Me
@@ -587,10 +600,10 @@ export default function Home() {
                 href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform"
               >
                 <FiLinkedin className="w-5 h-5" />
-                Connect on LinkedIn
+                LinkedIn
               </a>
             </div>
           </div>
@@ -604,7 +617,7 @@ export default function Home() {
                 placeholder="Your Name"
                 className={`w-full p-3 rounded-lg border transition-colors ${
                   formErrors.name 
-                    ? 'border-red-500 focus:border-red-500' 
+                    ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
                 } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
                 disabled={isSending}
@@ -613,7 +626,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm mt-1"
+                  className="text-destructive text-sm mt-1"
                 >
                   {formErrors.name}
                 </motion.p>
@@ -629,7 +642,7 @@ export default function Home() {
                 placeholder="Your Email"
                 className={`w-full p-3 rounded-lg border transition-colors ${
                   formErrors.email 
-                    ? 'border-red-500 focus:border-red-500' 
+                    ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
                 } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
                 disabled={isSending}
@@ -638,7 +651,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm mt-1"
+                  className="text-destructive text-sm mt-1"
                 >
                   {formErrors.email}
                 </motion.p>
@@ -654,7 +667,7 @@ export default function Home() {
                 placeholder="Your Phone Number"
                 className={`w-full p-3 rounded-lg border transition-colors ${
                   formErrors.phone 
-                    ? 'border-red-500 focus:border-red-500' 
+                    ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
                 } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
                 disabled={isSending}
@@ -663,7 +676,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm mt-1"
+                  className="text-destructive text-sm mt-1"
                 >
                   {formErrors.phone}
                 </motion.p>
@@ -679,7 +692,7 @@ export default function Home() {
                 rows={4}
                 className={`w-full p-3 rounded-lg border transition-colors resize-none ${
                   formErrors.message 
-                    ? 'border-red-500 focus:border-red-500' 
+                    ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
                 } bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20`}
                 disabled={isSending}
@@ -688,7 +701,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm mt-1"
+                  className="text-destructive text-sm mt-1"
                 >
                   {formErrors.message}
                 </motion.p>
@@ -706,7 +719,7 @@ export default function Home() {
             >
               {isSending ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
                   Sending...
                 </>
               ) : (
@@ -726,7 +739,7 @@ export default function Home() {
               >
                 <p className="text-green-700 dark:text-green-300 flex items-center gap-2">
                   <span className="text-green-500">✓</span>
-                  Message sent successfully! I'll get back to you soon.
+                  Message sent successfully! I&apos;ll get back to you soon.
                 </p>
               </motion.div>
             )}
@@ -748,11 +761,11 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="bg-primary text-white dark:text-background py-12">
-        <div className="container mx-auto text-center">
+      <section className="bg-primary text-primary-foreground py-12">
+        <div className="container mx-auto text-center px-6">
           <h2 className="text-3xl font-bold mb-4">Available for New Opportunities</h2>
-          <p className="mb-8">I'm currently open to freelance projects, full-time roles, and collaborations. Let's build something amazing together!</p>
-          <a href="#contact" className="btn-secondary">Hire Me</a>
+          <p className="mb-8 text-primary-foreground/80">I&apos;m currently open to freelance projects, full-time roles, and collaborations. Let&apos;s build something amazing together!</p>
+          <a href="#contact" className="inline-block px-6 py-3 bg-background text-foreground rounded-lg hover:opacity-90 transition-all font-medium">Hire Me</a>
         </div>
       </section>
 
