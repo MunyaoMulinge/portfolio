@@ -152,7 +152,22 @@ export default function Home() {
     setError('');
     setIsSent(false);
 
-    if (!formRef.current) return;
+    // Create mailto link as fallback
+    const subject = encodeURIComponent('Portfolio Contact Form Submission');
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone: ${formData.phone}\n\n` +
+      `Message:\n${formData.message}`
+    );
+    
+    // Try EmailJS first, fallback to mailto
+    if (!formRef.current) {
+      // Direct mailto fallback
+      window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
+      setIsSending(false);
+      return;
+    }
 
     emailjs
       .sendForm(
@@ -173,9 +188,11 @@ export default function Home() {
           setTimeout(() => setIsSent(false), 5000);
         },
         (error) => {
-          console.error('Failed to send email:', error.text);
-          setError('Failed to send email. Please try again.');
+          console.error('EmailJS failed, using mailto fallback:', error);
+          // Fallback to mailto
+          window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
           setIsSending(false);
+          setError('Opened your email client. Please send the message from there.');
         }
       );
   };
