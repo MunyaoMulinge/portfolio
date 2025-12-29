@@ -237,7 +237,7 @@ export default function Home() {
       <BackToTop />
       
       {/* Hero Section */}
-      <section id="hero" className="section-container min-h-[90vh] flex items-center" ref={heroRef}>
+      <section id="hero" className="section-container min-h-[70vh] flex items-center" ref={heroRef}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}

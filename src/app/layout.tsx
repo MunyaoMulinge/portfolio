@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://victormulinge.dev'),
+  metadataBase: new URL('https://www.vmulinge.dev'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "Victor Mulinge - Full Stack Developer",
     description: "Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter. Available for hire.",
-    url: 'https://victormulinge.dev',
+    url: 'https://www.vmulinge.dev',
     siteName: 'Victor Mulinge Portfolio',
     images: [
       {
@@ -68,7 +68,7 @@ export default function RootLayout({
     name: 'Victor Mulinge',
     jobTitle: 'Full Stack Developer',
     description: 'Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter.',
-    url: 'https://victormulinge.dev',
+    url: 'https://www.vmulinge.dev',
     email: 'munyaomulinge@protonmail.com',
     telephone: '+254722253660',
     sameAs: [

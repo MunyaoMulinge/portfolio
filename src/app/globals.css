@@ -79,7 +79,7 @@
   }
 
   .section-container {
-    @apply w-full py-20 px-6 max-w-7xl mx-auto;
+    @apply w-full py-12 px-6 max-w-7xl mx-auto;
   }
 
   .section-title {
