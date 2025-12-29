@@ -12,13 +12,13 @@ import emailjs from '@emailjs/browser';
 
 const skills = [
   { name: 'Flutter', level: 'Advanced', icon: '🐦' },
+  { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
   { name: 'Angular', level: 'Advanced', icon: '🅰️' },
   { name: 'React', level: 'Advanced', icon: '⚛️' },
   { name: 'TypeScript', level: 'Advanced', icon: '🟦' },
   { name: 'Dart', level: 'Advanced', icon: '🎯' },
-  { name: 'Firebase', level: 'Advanced', icon: '🔥' },
-  { name: 'Tailwind CSS', level: 'Advanced', icon: '🎨' },
   { name: 'PostgreSQL', level: 'Advanced', icon: '🐘' },
+  { name: 'Firebase', level: 'Advanced', icon: '🔥' },
 ];
 
 const experience = [
@@ -200,9 +200,9 @@ export default function Home() {
                 2000,
                 'Flutter Expert',
                 2000,
-                'Angular Developer',
+                'Spring Boot Developer',
                 2000,
-                'React Enthusiast',
+                'Angular Specialist',
                 2000,
               ]}
               wrapper="span"
@@ -211,7 +211,7 @@ export default function Home() {
             />
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
-            4+ years crafting responsive mobile &amp; web apps with Flutter, Angular, React &amp; modern JS. Expert in cross-platform development, UI/UX optimization, and RESTful APIs.
+            4+ years crafting responsive mobile &amp; web apps with Flutter, Angular, React &amp; Spring Boot. Expert in full-stack development, UI/UX optimization, and RESTful APIs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <motion.button
