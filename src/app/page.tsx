@@ -11,30 +11,30 @@ import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 const skills = [
-  { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
+  { name: 'Flutter', level: 'Advanced', icon: '🐦' },
   { name: 'Angular', level: 'Advanced', icon: '🅰️' },
   { name: 'React', level: 'Advanced', icon: '⚛️' },
-  { name: 'PHP', level: 'Advanced', icon: '🐘' },
-  { name: 'Flutter', level: 'Intermediate', icon: '🐦' },
-  { name: 'MySQL', level: 'Advanced', icon: '🐬' },
   { name: 'TypeScript', level: 'Advanced', icon: '🟦' },
-  { name: 'Tailwind CSS', level: 'Intermediate', icon: '🎨' },
+  { name: 'Dart', level: 'Advanced', icon: '🎯' },
+  { name: 'Firebase', level: 'Advanced', icon: '🔥' },
+  { name: 'Tailwind CSS', level: 'Advanced', icon: '🎨' },
+  { name: 'PostgreSQL', level: 'Advanced', icon: '🐘' },
 ];
 
 const experience = [
   {
-    title: 'Full Stack Developer',
+    title: 'Software Developer',
     company: 'Tangazoletu Limited',
-    period: '2024 - Present',
-    description: 'Developed and maintained web applications using Spring Boot, Angular, and MySQL. Implemented new features and improved application performance.',
-    tech: ['Spring Boot', 'Angular', 'MySQL', 'PHP', 'Flutter', 'JavaScript'],
+    period: 'Feb 2024 - Present',
+    description: 'Develop cross-platform mobile apps with Flutter/Dart, delivering responsive UI/UX across iOS and Android. Build web admin portals integrating with Spring Boot microservices for NCBA Bank\'s loan management system. Achieved 30% improvement in load times through smart caching and lazy loading.',
+    tech: ['Flutter', 'Dart', 'Spring Boot', 'PHP', 'Firebase', 'REST APIs'],
   },
   {
-    title: 'ICT Assistant',
-    company: 'ICT Authority of Kenya',
-    period: '2022 - 2023',
-    description: 'Built responsive web applications using React and PHP. Collaborated with the design team to implement user-friendly interfaces.',
-    tech: ['Django', 'PHP', 'MySQL', 'JavaScript'],
+    title: 'Software Developer',
+    company: 'Sanifu Smart Technologies',
+    period: 'Dec 2021 - Jan 2024',
+    description: 'Designed cross-platform mobile applications using Flutter/Dart for financial dashboards serving 5,000+ users. Built web interfaces with Angular and React, integrated payment gateways and third-party APIs for real-time transactions.',
+    tech: ['Flutter', 'Angular', 'React', 'Firebase', 'REST APIs', 'JWT/OAuth'],
   },
 ];
 
@@ -43,7 +43,7 @@ const education = [
     degree: 'Bachelor of Science in Information Technology',
     school: 'Multimedia University of Kenya',
     period: '2017 - 2021',
-    description: 'Focused on software engineering, database management, and web development.',
+    description: 'Honours, Second Class Upper Division. Focused on software engineering, database management, and web development.',
   },
 ];
 
@@ -249,7 +249,7 @@ export default function Home() {
               sequence={[
                 'Full Stack Developer',
                 2000,
-                'Spring Boot Expert',
+                'Flutter Expert',
                 2000,
                 'Angular Developer',
                 2000,
@@ -262,8 +262,7 @@ export default function Home() {
             />
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            With 2 years of experience in building modern web applications using
-            Spring Boot, Angular, React, PHP, Flutter, and MySQL databases.
+            4+ years crafting responsive mobile &amp; web apps with Flutter, Angular, React &amp; modern JS. Expert in cross-platform development, UI/UX optimization, and RESTful APIs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <motion.button

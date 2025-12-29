@@ -3,9 +3,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Victor Mulinge - Full Stack Developer | Spring Boot & Angular Expert",
-  description: "Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter. 2+ years building modern web applications with MySQL databases. Available for hire.",
-  keywords: ["Full Stack Developer", "Spring Boot", "Angular", "React", "PHP", "Flutter", "MySQL", "TypeScript", "Web Development", "Kenya"],
+  title: "Victor Mulinge - Full Stack Developer | Flutter, Angular & React Expert",
+  description: "Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & modern JS. Expert in cross-platform development, UI/UX optimization, and RESTful APIs.",
+  keywords: ["Full Stack Developer", "Flutter", "Angular", "React", "Dart", "TypeScript", "Mobile Development", "Web Development", "Kenya", "Cross-platform"],
   authors: [{ name: "Victor Mulinge" }],
   creator: "Victor Mulinge",
   publisher: "Victor Mulinge",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Victor Mulinge - Full Stack Developer",
-    description: "Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter. Available for hire.",
+    description: "Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & modern JS. Expert in cross-platform development.",
     url: 'https://www.vmulinge.dev',
     siteName: 'Victor Mulinge Portfolio',
     images: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Victor Mulinge - Full Stack Developer",
-    description: "Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter. Available for hire.",
+    description: "Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & modern JS.",
     creator: '@MunYeahOh',
     images: ['/og-image.jpg'],
   },
@@ -67,7 +67,7 @@ export default function RootLayout({
     '@type': 'Person',
     name: 'Victor Mulinge',
     jobTitle: 'Full Stack Developer',
-    description: 'Experienced Full Stack Developer specializing in Spring Boot, Angular, React, PHP, and Flutter.',
+    description: 'Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & modern JS.',
     url: 'https://www.vmulinge.dev',
     email: 'munyaomulinge@protonmail.com',
     telephone: '+254722253660',
@@ -77,14 +77,15 @@ export default function RootLayout({
       'https://twitter.com/MunYeahOh'
     ],
     knowsAbout: [
-      'Spring Boot',
+      'Flutter',
+      'Dart',
       'Angular',
       'React',
-      'PHP',
-      'Flutter',
-      'MySQL',
       'TypeScript',
       'JavaScript',
+      'Firebase',
+      'REST APIs',
+      'Mobile Development',
       'Web Development'
     ],
     alumniOf: {
