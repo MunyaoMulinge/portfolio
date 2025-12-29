@@ -56,10 +56,10 @@ const projects = [
     image: '/images/projects/fullstack-customer.jpg'
   },
   {
-    title: 'E-commerce Platform',
-    description: 'A full-stack e-commerce platform with user authentication, product management, and payment integration.',
-    tech: ['React', 'Spring Boot', 'MySQL'],
-    link: 'https://github.com/your-username/project1',
+    title: 'Land Mawe Fleet Management',
+    description: 'A comprehensive fleet management system for logistics operations featuring truck tracking, driver management, job cards with pre-departure checklists, fuel tracking, scheduled maintenance, insurance & compliance monitoring, invoicing with PDF generation, and role-based access control.',
+    tech: ['React', 'Node.js/Express', 'Supabase'],
+    link: 'https://land-mawe-app.vercel.app',
     image: '/images/projects/default.jpg'
   },
   {
