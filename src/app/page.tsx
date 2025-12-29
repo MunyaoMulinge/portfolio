@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiGithub, FiLinkedin, FiMail, FiCalendar, FiExternalLink, FiPhone } from 'react-icons/fi';
+import { FiLinkedin, FiMail, FiCalendar, FiExternalLink, FiPhone } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import ScrollProgress from '@/components/ScrollProgress';
 import BackToTop from '@/components/BackToTop';
@@ -237,14 +237,14 @@ export default function Home() {
       <BackToTop />
       
       {/* Hero Section */}
-      <section id="hero" className="section-container min-h-[70vh] flex items-center" ref={heroRef}>
+      <section id="hero" className="section-container min-h-[60vh] sm:min-h-[70vh] flex items-center" ref={heroRef}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
           className="text-center w-full"
         >
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 text-foreground">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-foreground">
             <TypeAnimation
               sequence={[
                 'Full Stack Developer',
@@ -261,7 +261,7 @@ export default function Home() {
               repeat={Infinity}
             />
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
             4+ years crafting responsive mobile &amp; web apps with Flutter, Angular, React &amp; modern JS. Expert in cross-platform development, UI/UX optimization, and RESTful APIs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -328,7 +328,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">My Skills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
@@ -337,15 +337,15 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card hover:scale-105 transition-transform text-center"
               >
-                <div className="text-3xl mb-3">{skill.icon}</div>
-                <h3 className="font-semibold mb-3">{skill.name}</h3>
-                <div className="w-full bg-border rounded-full h-2">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">{skill.icon}</div>
+                <h3 className="font-semibold text-sm sm:text-base mb-2 sm:mb-3">{skill.name}</h3>
+                <div className="w-full bg-border rounded-full h-1.5 sm:h-2">
                   <div 
-                    className="bg-primary h-2 rounded-full transition-all duration-500" 
+                    className="bg-primary h-1.5 sm:h-2 rounded-full transition-all duration-500" 
                     style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}
                   />
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">{skill.level}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1 sm:mt-2">{skill.level}</p>
               </motion.div>
             ))}
           </div>
@@ -360,7 +360,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Experience</h2>
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6">
             {experience.map((job, index) => (
               <motion.div
                 key={job.period}
@@ -369,19 +369,19 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card"
               >
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4 mb-3 sm:mb-4">
                   <div>
-                    <h3 className="text-xl font-semibold">{job.title}</h3>
-                    <p className="text-muted-foreground">{job.company}</p>
+                    <h3 className="text-lg sm:text-xl font-semibold">{job.title}</h3>
+                    <p className="text-muted-foreground text-sm sm:text-base">{job.company}</p>
                   </div>
-                  <span className="text-sm text-muted-foreground">{job.period}</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{job.period}</span>
                 </div>
-                <p className="mb-4">{job.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="mb-3 sm:mb-4 text-sm sm:text-base leading-relaxed">{job.description}</p>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {job.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 bg-muted dark:bg-muted rounded-full text-sm"
+                      className="px-2 sm:px-3 py-0.5 sm:py-1 bg-muted rounded-full text-xs sm:text-sm"
                     >
                       {tech}
                     </span>
@@ -401,7 +401,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Education</h2>
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6">
             {education.map((edu, index) => (
               <motion.div
                 key={edu.period}
@@ -410,14 +410,14 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card"
               >
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4 mb-3 sm:mb-4">
                   <div>
-                    <h3 className="text-xl font-semibold">{edu.degree}</h3>
-                    <p className="text-muted-foreground">{edu.school}</p>
+                    <h3 className="text-lg sm:text-xl font-semibold">{edu.degree}</h3>
+                    <p className="text-muted-foreground text-sm sm:text-base">{edu.school}</p>
                   </div>
-                  <span className="text-sm text-muted-foreground">{edu.period}</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{edu.period}</span>
                 </div>
-                <p>{edu.description}</p>
+                <p className="text-sm sm:text-base">{edu.description}</p>
               </motion.div>
             ))}
           </div>
@@ -432,7 +432,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Featured Projects</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {projects.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -441,29 +441,29 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="custom-card group"
               >
-                <div className="h-48 relative overflow-hidden">
+                <div className="h-40 sm:h-48 relative overflow-hidden">
                   {project.image && (
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL="/images/placeholder.jpg"
                     />
                   )}
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed line-clamp-3">{project.description}</p>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 bg-muted text-xs rounded-md font-medium"
+                        className="px-2 py-0.5 sm:py-1 bg-muted text-xs rounded-md font-medium"
                       >
                         {tech}
                       </span>
@@ -473,9 +473,9 @@ export default function Home() {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline inline-flex items-center gap-2 text-sm font-medium"
+                    className="text-primary hover:underline inline-flex items-center gap-2 text-xs sm:text-sm font-medium"
                   >
-                    View Project <FiExternalLink className="w-4 h-4" />
+                    View Project <FiExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
                 </div>
               </motion.div>
@@ -492,7 +492,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Testimonials</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
@@ -501,8 +501,8 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card hover:scale-[1.02] transition-transform"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-border">
+                <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
                     <Image
                       src={testimonial.image}
                       alt={`${testimonial.name} - ${testimonial.role}`}
@@ -512,11 +512,11 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <h3 className="font-semibold">{testimonial.name}</h3>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    <h3 className="font-semibold text-sm sm:text-base">{testimonial.name}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground italic leading-relaxed">&ldquo;{testimonial.content}&rdquo;</p>
+                <p className="text-muted-foreground italic leading-relaxed text-sm">&ldquo;{testimonial.content}&rdquo;</p>
               </motion.div>
             ))}
           </div>
@@ -531,7 +531,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Latest Blog Posts</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {blogPosts.map((post, index) => (
               <motion.div
                 key={post.title}
@@ -540,21 +540,21 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card group hover:scale-[1.02] transition-transform"
               >
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                  <FiCalendar className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+                  <FiCalendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   {new Date(post.date).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                   })}
                 </div>
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 group-hover:text-accent transition-colors">
                   {post.title}
                 </h3>
-                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{post.excerpt}</p>
+                <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed">{post.excerpt}</p>
                 <a
                   href={post.link}
-                  className="text-primary hover:underline inline-flex items-center gap-2 text-sm font-medium"
+                  className="text-primary hover:underline inline-flex items-center gap-2 text-xs sm:text-sm font-medium"
                 >
                   Read More →
                 </a>
@@ -570,43 +570,43 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={contactInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto bg-card p-8 rounded-xl border border-border"
+          className="max-w-4xl mx-auto bg-card p-4 sm:p-6 md:p-8 rounded-xl border border-border"
         >
           <h2 className="section-title">Let&apos;s Connect</h2>
           <div className="text-center">
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-2">
               I&apos;m currently open to new opportunities and collaborations. Whether you have a project in mind or just want to chat about tech, I&apos;d love to hear from you!
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <a
                 href={`mailto:${contact.email}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Email me (opens in new tab)"
-                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+                className="btn-primary inline-flex items-center gap-2 hover:scale-105 transition-transform w-full sm:w-auto justify-center"
               >
-                <FiMail className="w-5 h-5" />
+                <FiMail className="w-4 h-4 sm:w-5 sm:h-5" />
                 Email Me
               </a>
               <a
                 href={`tel:${contact.phone}`}
-                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform w-full sm:w-auto justify-center"
               >
-                <FiPhone className="w-5 h-5" />
+                <FiPhone className="w-4 h-4 sm:w-5 sm:h-5" />
                 Call Me
               </a>
               <a
                 href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform"
+                className="btn-secondary inline-flex items-center gap-2 hover:scale-105 transition-transform w-full sm:w-auto justify-center"
               >
-                <FiLinkedin className="w-5 h-5" />
+                <FiLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                 LinkedIn
               </a>
             </div>
           </div>
-          <form ref={formRef} onSubmit={sendEmail} className="mt-8 space-y-4">
+          <form ref={formRef} onSubmit={sendEmail} className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
             <div>
               <input
                 type="text"
@@ -614,7 +614,7 @@ export default function Home() {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your Name"
-                className={`w-full p-3 rounded-lg border transition-colors ${
+                className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.name 
                     ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
@@ -625,7 +625,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-destructive text-sm mt-1"
+                  className="text-destructive text-xs sm:text-sm mt-1"
                 >
                   {formErrors.name}
                 </motion.p>
@@ -639,7 +639,7 @@ export default function Home() {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Your Email"
-                className={`w-full p-3 rounded-lg border transition-colors ${
+                className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.email 
                     ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
@@ -650,7 +650,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-destructive text-sm mt-1"
+                  className="text-destructive text-xs sm:text-sm mt-1"
                 >
                   {formErrors.email}
                 </motion.p>
@@ -664,7 +664,7 @@ export default function Home() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Your Phone Number"
-                className={`w-full p-3 rounded-lg border transition-colors ${
+                className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.phone 
                     ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
@@ -675,7 +675,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-destructive text-sm mt-1"
+                  className="text-destructive text-xs sm:text-sm mt-1"
                 >
                   {formErrors.phone}
                 </motion.p>
@@ -689,7 +689,7 @@ export default function Home() {
                 onChange={handleInputChange}
                 placeholder="Your Message"
                 rows={4}
-                className={`w-full p-3 rounded-lg border transition-colors resize-none ${
+                className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors resize-none text-sm sm:text-base ${
                   formErrors.message 
                     ? 'border-destructive focus:border-destructive' 
                     : 'border-border focus:border-primary'
@@ -700,7 +700,7 @@ export default function Home() {
                 <motion.p 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-destructive text-sm mt-1"
+                  className="text-destructive text-xs sm:text-sm mt-1"
                 >
                   {formErrors.message}
                 </motion.p>
@@ -760,11 +760,11 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="bg-primary text-primary-foreground py-12">
-        <div className="container mx-auto text-center px-6">
-          <h2 className="text-3xl font-bold mb-4">Available for New Opportunities</h2>
-          <p className="mb-8 text-primary-foreground/80">I&apos;m currently open to freelance projects, full-time roles, and collaborations. Let&apos;s build something amazing together!</p>
-          <a href="#contact" className="inline-block px-6 py-3 bg-background text-foreground rounded-lg hover:opacity-90 transition-all font-medium">Hire Me</a>
+      <section className="bg-primary text-primary-foreground py-8 sm:py-12">
+        <div className="container mx-auto text-center px-4 sm:px-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Available for New Opportunities</h2>
+          <p className="mb-6 sm:mb-8 text-primary-foreground/80 text-sm sm:text-base max-w-2xl mx-auto">I&apos;m currently open to freelance projects, full-time roles, and collaborations. Let&apos;s build something amazing together!</p>
+          <a href="#contact" className="inline-block px-4 sm:px-6 py-2.5 sm:py-3 bg-background text-foreground rounded-lg hover:opacity-90 transition-all font-medium text-sm sm:text-base">Hire Me</a>
         </div>
       </section>
 

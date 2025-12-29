@@ -102,6 +102,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const savedTheme = localStorage.getItem('darkMode');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
+                if (isDark) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
