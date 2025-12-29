@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Victor Mulinge - Full Stack Developer | Flutter, Angular & React Expert",
@@ -9,6 +10,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Victor Mulinge" }],
   creator: "Victor Mulinge",
   publisher: "Victor Mulinge",
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
     siteName: 'Victor Mulinge Portfolio',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'Victor Mulinge - Full Stack Developer',
@@ -39,7 +44,7 @@ export const metadata: Metadata = {
     title: "Victor Mulinge - Full Stack Developer",
     description: "Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & modern JS.",
     creator: '@MunYeahOh',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.svg'],
   },
   robots: {
     index: true,
@@ -125,6 +130,7 @@ export default function RootLayout({
         <main className="pt-16">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

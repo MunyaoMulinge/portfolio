@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiLinkedin, FiMail, FiCalendar, FiExternalLink, FiPhone } from 'react-icons/fi';
+import { FiLinkedin, FiMail, FiExternalLink, FiPhone } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import ScrollProgress from '@/components/ScrollProgress';
 import BackToTop from '@/components/BackToTop';
@@ -49,6 +49,13 @@ const education = [
 
 const projects = [
   {
+    title: 'Land Mawe Fleet Management',
+    description: 'A comprehensive fleet management system for logistics operations featuring truck tracking, driver management, job cards with pre-departure checklists, fuel tracking, scheduled maintenance, insurance & compliance monitoring, invoicing with PDF generation, and role-based access control.',
+    tech: ['React', 'Node.js/Express', 'Supabase'],
+    link: 'https://land-mawe-app.vercel.app',
+    image: '/images/projects/truck.jpg'
+  },
+  {
     title: 'Full Stack Customer Management System',
     description: 'A modern, containerized full-stack application for customer management built with Spring Boot, Angular, and PostgreSQL. Features include customer CRUD operations, responsive UI with PrimeFlex, and Docker containerization for easy deployment.',
     tech: ['Spring Boot', 'Angular', 'PostgreSQL'],
@@ -56,22 +63,8 @@ const projects = [
     image: '/images/projects/fullstack-customer.jpg'
   },
   {
-    title: 'Land Mawe Fleet Management',
-    description: 'A comprehensive fleet management system for logistics operations featuring truck tracking, driver management, job cards with pre-departure checklists, fuel tracking, scheduled maintenance, insurance & compliance monitoring, invoicing with PDF generation, and role-based access control.',
-    tech: ['React', 'Node.js/Express', 'Supabase'],
-    link: 'https://land-mawe-app.vercel.app',
-    image: '/images/projects/default.jpg'
-  },
-  {
-    title: 'Task Management App',
-    description: 'A mobile application for task management and team collaboration built with Flutter.',
-    tech: ['Flutter', 'Firebase'],
-    link: 'https://github.com/your-username/project2',
-    image: '/images/projects/default.jpg'
-  },
-  {
     title: 'Portfolio Website',
-    description: 'A modern portfolio website built with Next.js and Tailwind CSS, featuring dark mode and animations.',
+    description: 'A modern portfolio website built with Next.js and Tailwind CSS, featuring dark mode, smooth animations, and fully responsive design.',
     tech: ['Next.js', 'TypeScript', 'Tailwind'],
     link: 'https://github.com/MunyaoMulinge/portfolio',
     image: '/images/projects/default.jpg'
@@ -83,49 +76,8 @@ const contact = {
   phone: '+254722253660',
   github: 'https://github.com/MunyaoMulinge',
   linkedin: 'https://linkedin.com/in/victormulinge',
+  twitter: 'https://twitter.com/MunYeahOh',
 };
-
-const testimonials = [
-  {
-    name: 'John Doe',
-    role: 'Tech Lead at Company',
-    content: 'Victor is an exceptional developer who consistently delivers high-quality code. His attention to detail and problem-solving skills are remarkable.',
-    image: '/testimonials/john.jpg'
-  },
-  {
-    name: 'Jane Smith',
-    role: 'Project Manager',
-    content: 'Working with Victor was a pleasure. He has excellent communication skills and always meets deadlines while maintaining code quality.',
-    image: '/testimonials/jane.jpg'
-  },
-  {
-    name: 'Mike Johnson',
-    role: 'Senior Developer',
-    content: 'Victor\'s ability to quickly grasp new technologies and implement them effectively is impressive. He\'s a valuable asset to any development team.',
-    image: '/testimonials/mike.jpg'
-  }
-];
-
-const blogPosts = [
-  {
-    title: 'Building Scalable Applications with Spring Boot',
-    excerpt: 'Learn how to create robust and scalable applications using Spring Boot and best practices.',
-    date: '2024-02-15',
-    link: '/blog/spring-boot-scalable-apps'
-  },
-  {
-    title: 'Modern Angular Development Techniques',
-    excerpt: 'Explore advanced Angular patterns and techniques for building better web applications.',
-    date: '2024-02-01',
-    link: '/blog/angular-development'
-  },
-  {
-    title: 'Docker and Kubernetes: A Practical Guide',
-    excerpt: 'A comprehensive guide to containerization and orchestration with Docker and Kubernetes.',
-    date: '2024-01-15',
-    link: '/blog/docker-kubernetes-guide'
-  }
-];
 
 export default function Home() {
   const { ref: heroRef, inView: heroInView } = useInView({ triggerOnce: true });
@@ -133,11 +85,8 @@ export default function Home() {
   const { ref: experienceRef, inView: experienceInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: educationRef, inView: educationInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: projectsRef, inView: projectsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const { ref: blogRef, inView: blogInView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const { ref: testimonialsRef, inView: testimonialsInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: contactRef, inView: contactInView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
@@ -484,86 +433,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="section-container" ref={testimonialsRef}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={testimonialsInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="section-title">Testimonials</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card hover:scale-[1.02] transition-transform"
-              >
-                <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
-                    <Image
-                      src={testimonial.image}
-                      alt={`${testimonial.name} - ${testimonial.role}`}
-                      fill
-                      className="object-cover"
-                      sizes="48px"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-sm sm:text-base">{testimonial.name}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground italic leading-relaxed text-sm">&ldquo;{testimonial.content}&rdquo;</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Blog Section */}
-      <section id="blog" className="section-container bg-muted/50" ref={blogRef}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={blogInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="section-title">Latest Blog Posts</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {blogPosts.map((post, index) => (
-              <motion.div
-                key={post.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={blogInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group hover:scale-[1.02] transition-transform"
-              >
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  <FiCalendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 group-hover:text-accent transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed">{post.excerpt}</p>
-                <a
-                  href={post.link}
-                  className="text-primary hover:underline inline-flex items-center gap-2 text-xs sm:text-sm font-medium"
-                >
-                  Read More →
-                </a>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
       {/* Contact Section */}
       <section id="contact" className="section-container pattern-dots" ref={contactRef}>
         <motion.div
@@ -759,34 +628,6 @@ export default function Home() {
           </form>
         </motion.div>
       </section>
-
-      <section className="bg-primary text-primary-foreground py-8 sm:py-12">
-        <div className="container mx-auto text-center px-4 sm:px-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Available for New Opportunities</h2>
-          <p className="mb-6 sm:mb-8 text-primary-foreground/80 text-sm sm:text-base max-w-2xl mx-auto">I&apos;m currently open to freelance projects, full-time roles, and collaborations. Let&apos;s build something amazing together!</p>
-          <a href="#contact" className="inline-block px-4 sm:px-6 py-2.5 sm:py-3 bg-background text-foreground rounded-lg hover:opacity-90 transition-all font-medium text-sm sm:text-base">Hire Me</a>
-        </div>
-      </section>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl max-h-full">
-            <Image
-              src="/images/projects/fullstack-customer.jpg"
-              alt="Full Stack Customer Management System"
-              width={1200}
-              height={800}
-              className="object-contain"
-            />
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-black/75"
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
