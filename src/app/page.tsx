@@ -182,11 +182,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
+      {/* Skip to main content link */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg z-50"
+      >
+        Skip to main content
+      </a>
+      
       <ScrollProgress />
       <BackToTop />
       
       {/* Hero Section */}
       <section id="hero" className="section-container min-h-[60vh] sm:min-h-[70vh] flex items-center" ref={heroRef}>
+        <div id="main-content"></div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
@@ -194,6 +203,7 @@ export default function Home() {
           className="text-center w-full"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-foreground">
+            <span className="sr-only">Victor Mulinge - </span>
             <TypeAnimation
               sequence={[
                 'Full Stack Developer',
@@ -208,6 +218,7 @@ export default function Home() {
               wrapper="span"
               speed={50}
               repeat={Infinity}
+              aria-label="Professional titles"
             />
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
@@ -285,10 +296,12 @@ export default function Home() {
                 animate={skillsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card hover:scale-105 transition-transform text-center"
+                role="article"
+                aria-labelledby={`skill-${skill.name.replace(/\s+/g, '-').toLowerCase()}`}
               >
-                <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">{skill.icon}</div>
-                <h3 className="font-semibold text-sm sm:text-base mb-2 sm:mb-3">{skill.name}</h3>
-                <div className="w-full bg-border rounded-full h-1.5 sm:h-2">
+                <div className="text-2xl sm:text-3xl mb-2 sm:mb-3" aria-hidden="true">{skill.icon}</div>
+                <h3 id={`skill-${skill.name.replace(/\s+/g, '-').toLowerCase()}`} className="font-semibold text-sm sm:text-base mb-2 sm:mb-3">{skill.name}</h3>
+                <div className="w-full bg-border rounded-full h-1.5 sm:h-2" role="progressbar" aria-valuenow={skill.level === 'Advanced' ? 100 : 75} aria-valuemin={0} aria-valuemax={100} aria-label={`${skill.name} proficiency`}>
                   <div 
                     className="bg-primary h-1.5 sm:h-2 rounded-full transition-all duration-500" 
                     style={{ width: skill.level === 'Advanced' ? '100%' : '75%' }}
@@ -311,32 +324,34 @@ export default function Home() {
           <h2 className="section-title">Experience</h2>
           <div className="space-y-4 sm:space-y-6">
             {experience.map((job, index) => (
-              <motion.div
+              <motion.article
                 key={job.period}
                 initial={{ opacity: 0, y: 20 }}
                 animate={experienceInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card"
+                aria-labelledby={`job-${index}`}
               >
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4 mb-3 sm:mb-4">
                   <div>
-                    <h3 className="text-lg sm:text-xl font-semibold">{job.title}</h3>
+                    <h3 id={`job-${index}`} className="text-lg sm:text-xl font-semibold">{job.title}</h3>
                     <p className="text-muted-foreground text-sm sm:text-base">{job.company}</p>
                   </div>
-                  <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{job.period}</span>
+                  <time className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{job.period}</time>
                 </div>
                 <p className="mb-3 sm:mb-4 text-sm sm:text-base leading-relaxed">{job.description}</p>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2" role="list" aria-label="Technologies used">
                   {job.tech.map((tech) => (
                     <span
                       key={tech}
                       className="px-2 sm:px-3 py-0.5 sm:py-1 bg-muted rounded-full text-xs sm:text-sm"
+                      role="listitem"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </motion.div>
@@ -352,22 +367,23 @@ export default function Home() {
           <h2 className="section-title">Education</h2>
           <div className="space-y-4 sm:space-y-6">
             {education.map((edu, index) => (
-              <motion.div
+              <motion.article
                 key={edu.period}
                 initial={{ opacity: 0, y: 20 }}
                 animate={educationInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card"
+                aria-labelledby={`education-${index}`}
               >
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4 mb-3 sm:mb-4">
                   <div>
-                    <h3 className="text-lg sm:text-xl font-semibold">{edu.degree}</h3>
+                    <h3 id={`education-${index}`} className="text-lg sm:text-xl font-semibold">{edu.degree}</h3>
                     <p className="text-muted-foreground text-sm sm:text-base">{edu.school}</p>
                   </div>
-                  <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{edu.period}</span>
+                  <time className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{edu.period}</time>
                 </div>
                 <p className="text-sm sm:text-base">{edu.description}</p>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </motion.div>
@@ -383,18 +399,19 @@ export default function Home() {
           <h2 className="section-title">Featured Projects</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {projects.map((project, index) => (
-              <motion.div
+              <motion.article
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={projectsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="custom-card group"
+                aria-labelledby={`project-${index}`}
               >
                 <div className="h-40 sm:h-48 relative overflow-hidden">
                   {project.image && (
                     <Image
                       src={project.image}
-                      alt={project.title}
+                      alt={`Screenshot of ${project.title} project`}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -404,15 +421,16 @@ export default function Home() {
                   )}
                 </div>
                 <div className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 group-hover:text-accent transition-colors">
+                  <h3 id={`project-${index}`} className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed line-clamp-3">{project.description}</p>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4" role="list" aria-label="Technologies used">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
                         className="px-2 py-0.5 sm:py-1 bg-muted text-xs rounded-md font-medium"
+                        role="listitem"
                       >
                         {tech}
                       </span>
@@ -423,11 +441,12 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline inline-flex items-center gap-2 text-xs sm:text-sm font-medium"
+                    aria-label={`View ${project.title} project (opens in new tab)`}
                   >
-                    View Project <FiExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    View Project <FiExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
                   </a>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </motion.div>
@@ -475,14 +494,19 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <form ref={formRef} onSubmit={sendEmail} className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
+          <form ref={formRef} onSubmit={sendEmail} className="mt-6 sm:mt-8 space-y-3 sm:space-y-4" noValidate>
             <div>
+              <label htmlFor="contact-name" className="sr-only">Your Name</label>
               <input
+                id="contact-name"
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your Name"
+                required
+                aria-describedby={formErrors.name ? "name-error" : undefined}
+                aria-invalid={!!formErrors.name}
                 className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.name 
                     ? 'border-destructive focus:border-destructive' 
@@ -492,9 +516,11 @@ export default function Home() {
               />
               {formErrors.name && (
                 <motion.p 
+                  id="name-error"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-destructive text-xs sm:text-sm mt-1"
+                  role="alert"
                 >
                   {formErrors.name}
                 </motion.p>
@@ -502,12 +528,17 @@ export default function Home() {
             </div>
 
             <div>
+              <label htmlFor="contact-email" className="sr-only">Your Email</label>
               <input
+                id="contact-email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Your Email"
+                required
+                aria-describedby={formErrors.email ? "email-error" : undefined}
+                aria-invalid={!!formErrors.email}
                 className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.email 
                     ? 'border-destructive focus:border-destructive' 
@@ -517,9 +548,11 @@ export default function Home() {
               />
               {formErrors.email && (
                 <motion.p 
+                  id="email-error"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-destructive text-xs sm:text-sm mt-1"
+                  role="alert"
                 >
                   {formErrors.email}
                 </motion.p>
@@ -527,12 +560,17 @@ export default function Home() {
             </div>
 
             <div>
+              <label htmlFor="contact-phone" className="sr-only">Your Phone Number</label>
               <input
+                id="contact-phone"
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Your Phone Number"
+                required
+                aria-describedby={formErrors.phone ? "phone-error" : undefined}
+                aria-invalid={!!formErrors.phone}
                 className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors text-sm sm:text-base ${
                   formErrors.phone 
                     ? 'border-destructive focus:border-destructive' 
@@ -542,9 +580,11 @@ export default function Home() {
               />
               {formErrors.phone && (
                 <motion.p 
+                  id="phone-error"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-destructive text-xs sm:text-sm mt-1"
+                  role="alert"
                 >
                   {formErrors.phone}
                 </motion.p>
@@ -552,12 +592,17 @@ export default function Home() {
             </div>
 
             <div>
+              <label htmlFor="contact-message" className="sr-only">Your Message</label>
               <textarea
+                id="contact-message"
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
                 placeholder="Your Message"
                 rows={4}
+                required
+                aria-describedby={formErrors.message ? "message-error" : undefined}
+                aria-invalid={!!formErrors.message}
                 className={`w-full p-2.5 sm:p-3 rounded-lg border transition-colors resize-none text-sm sm:text-base ${
                   formErrors.message 
                     ? 'border-destructive focus:border-destructive' 
@@ -567,9 +612,11 @@ export default function Home() {
               />
               {formErrors.message && (
                 <motion.p 
+                  id="message-error"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-destructive text-xs sm:text-sm mt-1"
+                  role="alert"
                 >
                   {formErrors.message}
                 </motion.p>
