@@ -16,7 +16,7 @@ const skills = [
   { name: 'Angular', level: 'Advanced', icon: '🅰️' },
   { name: 'React', level: 'Advanced', icon: '⚛️' },
   { name: 'TypeScript', level: 'Advanced', icon: '🟦' },
-  { name: 'Dart', level: 'Advanced', icon: '🎯' },
+  { name: 'Supabase', level: 'Advanced', icon: '⚡' },
   { name: 'PostgreSQL', level: 'Advanced', icon: '🐘' },
   { name: 'Firebase', level: 'Advanced', icon: '🔥' },
 ];

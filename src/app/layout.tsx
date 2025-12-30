@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Victor Mulinge - Full Stack Developer | Flutter, Angular & React Expert",
   description: "Full Stack Developer with 4+ years crafting responsive mobile & web apps with Flutter, Angular, React & Spring Boot. Expert in full-stack development, UI/UX optimization, and RESTful APIs.",
-  keywords: ["Full Stack Developer", "Flutter", "Spring Boot", "Angular", "React", "Dart", "TypeScript", "Mobile Development", "Web Development", "Kenya", "Cross-platform"],
+  keywords: ["Full Stack Developer", "Flutter", "Spring Boot", "Angular", "React", "Dart", "TypeScript", "Supabase", "Mobile Development", "Web Development", "Kenya", "Cross-platform"],
   authors: [{ name: "Victor Mulinge" }],
   creator: "Victor Mulinge",
   publisher: "Victor Mulinge",
@@ -89,6 +89,7 @@ export default function RootLayout({
       'React',
       'TypeScript',
       'JavaScript',
+      'Supabase',
       'PostgreSQL',
       'Firebase',
       'REST APIs',
