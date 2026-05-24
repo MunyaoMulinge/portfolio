@@ -14,7 +14,7 @@ const skills = [
   { name: 'Flutter', level: 'Advanced', icon: '🐦' },
   { name: 'Spring Boot', level: 'Advanced', icon: '🌱' },
   { name: 'Angular', level: 'Advanced', icon: '🅰️' },
-  { name: 'React', level: 'Advanced', icon: '⚛️' },
+  { name: 'React / Next.js', level: 'Advanced', icon: '⚛️' },
   { name: 'TypeScript', level: 'Advanced', icon: '🟦' },
   { name: 'Supabase', level: 'Advanced', icon: '⚡' },
   { name: 'PostgreSQL', level: 'Advanced', icon: '🐘' },
@@ -48,6 +48,13 @@ const education = [
 ];
 
 const projects = [
+  {
+    title: 'NCBA Digital Lending Dashboard',
+    description: 'A production-grade frontend demo of a microservices-based loan management system for NCBA Bank Kenya. Features role-based access control with 4 tiers, 6 interactive Recharts visualizations, virtualized customer lists (5,000+ records), real-time audit trail polling, CSV/PNG exports, and dark mode support.',
+    tech: ['Next.js', 'TypeScript', 'TanStack Query', 'Recharts', 'Tailwind CSS', 'shadcn/ui'],
+    link: 'https://ncba-digital-lending-dashboard-ndf5s2wke.vercel.app',
+    image: '/images/projects/default.jpg'
+  },
   {
     title: 'Land Mawe Fleet Management',
     description: 'A comprehensive fleet management system for logistics operations featuring truck tracking, driver management, job cards with pre-departure checklists, fuel tracking, scheduled maintenance, insurance & compliance monitoring, invoicing with PDF generation, and role-based access control.',
